@@ -56,5 +56,23 @@ public class ProductServlet extends HttpServlet {
         out.println("</table>");
         out.println("</body>");
         out.println("</html>");
+
+        try {
+            String id = request.getParameter("id"); 
+
+            if (id != null) {
+                Product product = productRepository.findById(id);
+                out.println("<h3>Detail Produk</h3>");
+                out.println("<p>ID: " + product.getId() + "</p>");
+                out.println("<p>Nama: " + product.getName() + "</p>");
+                out.println("<p>Harga: Rp" + product.getPrice() + "</p>");
+            } else {
+                out.println("<p>Parameter 'id' tidak ditemukan.</p>");
+            }
+        } catch (Exception e) {
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Terjadi kesalahan saat memproses permintaan");
+        }
     }
 }
+
+
